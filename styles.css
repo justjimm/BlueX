@@ -1,0 +1,172 @@
+
+:root{
+  --blue:#1f5f97;
+  --green:#3f9b2f;
+  --ink:#0b1220;
+  --muted:#5b667a;
+  --bg:#ffffff;
+  --card:#f6f8fb;
+  --line:#e6ebf2;
+  --shadow: 0 10px 30px rgba(11,18,32,.08);
+  --radius:18px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";}
+body{color:var(--ink);background:var(--bg);line-height:1.55}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1120px;margin:0 auto;padding:0 18px}
+
+.topbar{
+  background:linear-gradient(90deg, rgba(31,95,151,.07), rgba(63,155,47,.06));
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+  color:var(--muted);
+}
+.topbar .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:10px 0}
+.topbar .left,.topbar .right{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff}
+
+header{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:saturate(180%) blur(10px);
+  background:rgba(255,255,255,.9);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;gap:16px
+}
+.brand{display:flex;align-items:center;gap:12px;min-width:220px}
+.brand img{height:40px;width:auto}
+.brand .name{font-weight:800;letter-spacing:.2px}
+.brand .tag{font-size:12px;color:var(--muted);margin-top:2px}
+
+nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center}
+nav a{font-weight:600;color:var(--ink);opacity:.9}
+nav a:hover{opacity:1}
+nav a.active{color:var(--blue)}
+.cta{display:flex;gap:10px;align-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;padding:11px 14px;border-radius:999px;
+  font-weight:700;border:1px solid var(--line);background:#fff;
+  transition:.2s transform, .2s box-shadow, .2s background, .2s border-color;
+  white-space:nowrap
+}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.btn.primary{background:linear-gradient(135deg,var(--blue), #2a79b8);border-color:transparent;color:#fff}
+.btn.secondary{background:linear-gradient(135deg,var(--green), #52b43f);border-color:transparent;color:#fff}
+.btn.ghost{background:#fff}
+.btn.small{padding:9px 12px;font-size:14px}
+
+.menuBtn{display:none}
+.menuPanel{display:none}
+
+.hero{
+  padding:56px 0 28px;
+}
+.heroGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
+.kicker{display:inline-flex;gap:10px;align-items:center;font-weight:800;color:var(--blue);font-size:14px;letter-spacing:.3px}
+.kicker .dot{width:8px;height:8px;border-radius:999px;background:var(--green)}
+h1{font-size:44px;line-height:1.08;margin:10px 0 12px}
+.subhead{font-size:18px;color:var(--muted);max-width:58ch}
+.heroCard{
+  background:linear-gradient(180deg,#ffffff, #f7fbff);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.heroCard .logoStack{display:grid;gap:10px}
+.heroCard img{border-radius:14px;border:1px solid var(--line);background:#fff}
+
+.section{padding:44px 0;border-top:1px solid var(--line)}
+.section h2{font-size:30px;margin:0 0 10px}
+.section p{color:var(--muted);margin:0 0 18px;max-width:75ch}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+}
+.card h3{margin:0 0 8px;font-size:18px}
+.card p{margin:0;color:var(--muted)}
+.card .link{margin-top:14px;display:inline-flex;gap:10px;align-items:center;color:var(--blue);font-weight:800}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:13px}
+.badge strong{color:var(--ink)}
+
+.split{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start
+}
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+}
+.panel h3{margin:0 0 8px}
+.list{margin:0;padding-left:18px;color:var(--muted)}
+.list li{margin:8px 0}
+.callout{
+  background:linear-gradient(135deg, rgba(31,95,151,.10), rgba(63,155,47,.10));
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap
+}
+.callout .text{max-width:70ch}
+.callout .text h3{margin:0 0 6px}
+.callout .text p{margin:0;color:var(--muted)}
+
+footer{
+  padding:30px 0;
+  border-top:1px solid var(--line);
+  background:#fff
+}
+.footerGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:start}
+.footerGrid .miniBrand{display:flex;gap:12px;align-items:center}
+.footerGrid .miniBrand img{height:36px;border-radius:10px;border:1px solid var(--line);background:#fff}
+.small{color:var(--muted);font-size:14px}
+.footerCols{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.footerCols a{display:block;padding:6px 0;color:var(--muted);font-weight:650}
+.footerCols a:hover{color:var(--ink)}
+hr.sep{border:none;border-top:1px solid var(--line);margin:18px 0}
+.copyright{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+
+.pageTitle{padding:26px 0 10px}
+.pageTitle h1{font-size:34px;margin:0 0 8px}
+.pageTitle p{margin:0;color:var(--muted);max-width:80ch}
+
+.form{
+  display:grid;gap:12px
+}
+.field{display:grid;gap:6px}
+.field label{font-weight:800;font-size:14px}
+.field input,.field textarea{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 12px;
+  font:inherit;
+  outline:none;
+  background:#fff
+}
+.field input:focus,.field textarea:focus{border-color:rgba(31,95,151,.5);box-shadow:0 0 0 4px rgba(31,95,151,.12)}
+.field textarea{min-height:120px;resize:vertical}
+
+@media (max-width: 920px){
+  .heroGrid{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+  nav ul{display:none}
+  .menuBtn{display:inline-flex}
+  .menuPanel{
+    display:none;
+    position:absolute;left:0;right:0;top:68px;
+    background:#fff;border-bottom:1px solid var(--line);
+    padding:12px 18px
+  }
+  .menuPanel.open{display:block}
+  .menuPanel a{display:block;padding:10px 0;font-weight:800;color:var(--ink)}
+}
