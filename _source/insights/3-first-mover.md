@@ -305,7 +305,7 @@ That observation is central to how we are approaching **EkoBuja**.
 
 ## EkoBuja begins with something Nigerians already understand
 
-EkoBuja is a BlueX business designed to expand participation in quality real estate by enabling fractional access to property opportunities. BlueX currently describes the platform as enabling fractional participation in income-bearing properties within a structured ownership and governance framework.
+EkoBuja is a BlueX business designed to expand participation in quality real estate by enabling fractional access to property opportunities. BlueX describes the platform as co-ownership of income-producing property, in shares that co-owners can trade with each other.
 
 But the more important strategic idea is not simply:
 
