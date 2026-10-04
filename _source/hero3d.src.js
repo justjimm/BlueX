@@ -1,7 +1,8 @@
-/* Bluechip hero: the B monogram in 3D.
-   Its layers float apart in depth, lean toward the cursor, and settle flat into the logo as
-   you scroll. Desktop with a fine pointer only; everyone else keeps the layered SVG version.
-   Built by _source/build.py from _source/hero3d.src.js (geometry from the fixed brand files). */
+/* BlueX hero: the X in 3D.
+   The two halves fly in from either side, hang apart in depth, lean toward the cursor,
+   and close into the flat X as you scroll. Desktop with a fine pointer only; everyone
+   else keeps the layered SVG version.
+   Built by _source/build.py from _source/hero3d.src.js (geometry from the BlueX X file). */
 (function () {
   "use strict";
   var box = document.querySelector(".hero-mark");
@@ -26,43 +27,35 @@
     if (!window.THREE) return;
     var T = window.THREE;
     var canvas = box.querySelector(".mark-canvas");
-    var hero = document.querySelector(".hero");
     var W = GEO.box[0], H = GEO.box[1];
+    var C = GEO.colors;
 
     var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: "low-power" });
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-
     var scene = new T.Scene();
     var camera = new T.PerspectiveCamera(20, 1, 10, 3000);
 
-    function shapes(parts) {
-      return parts.map(function (p) {
-        var sh = new T.Shape(p.outer.map(function (q) { return new T.Vector2(q[0] - W / 2, -(q[1] - H / 2)); }));
-        p.holes.forEach(function (h) {
-          sh.holes.push(new T.Path(h.map(function (q) { return new T.Vector2(q[0] - W / 2, -(q[1] - H / 2)); })));
-        });
-        return sh;
-      });
-    }
-    function layer(parts, depth, cap, side, bevel) {
-      var g = new T.ExtrudeGeometry(shapes(parts), {
+    function half(pts, cap, side, depth) {
+      var sh = new T.Shape(pts.map(function (q) { return new T.Vector2(q[0] - W / 2, -(q[1] - H / 2)); }));
+      var g = new T.ExtrudeGeometry(sh, {
         depth: depth, curveSegments: 1, bevelEnabled: true,
-        bevelThickness: bevel, bevelSize: bevel * 0.55, bevelSegments: 2
+        bevelThickness: 0.9, bevelSize: 0.5, bevelSegments: 2
       });
+      // pivot each half around its own centre so it can roll as it flies in
+      g.computeBoundingBox();
+      var c = new T.Vector3(); g.boundingBox.getCenter(c);
+      g.translate(-c.x, -c.y, -depth / 2);
       var m = new T.Mesh(g, [new T.MeshBasicMaterial({ color: cap }), new T.MeshBasicMaterial({ color: side })]);
-      return m;
+      var holder = new T.Group(); holder.add(m);
+      holder.userData.home = new T.Vector3(c.x, c.y, 0);
+      holder.position.copy(holder.userData.home);
+      return holder;
     }
-    var C = GEO.colors;
-    var upper = layer(GEO.upper, 16, C.navy, "#0A1430", 1.1);
-    var lower = layer(GEO.lower, 16, C.navy, "#0A1430", 1.1);
-    var bowl = layer(GEO.bowl, 8, C.cobalt, "#1838B8", 0.9);
-    var slash = layer(GEO.slash, 4, C.cobaltLight, "#3F68D6", 0.6);
-    var mark = new T.Group();
-    [upper, lower, bowl, slash].forEach(function (m) { mark.add(m); });
+    var blue = half(GEO.blue, C.blue, C.blueSide, 12);
+    var green = half(GEO.green, C.green, C.greenSide, 12);
     var pivot = new T.Group();
-    pivot.add(mark);
-    mark.position.z = -14;          // rotate around the middle of the stack
+    pivot.add(blue); pivot.add(green);
     scene.add(pivot);
 
     function resize() {
@@ -70,8 +63,8 @@
       if (!w || !h) return;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
-      // keep the B the same height as the SVG it replaces (canvas is 136% of the box height)
-      var visibleH = (H + 8) * 1.36;
+      // the canvas is 160% of the box; the box shows the X's 107-unit-high view box
+      var visibleH = 107 * 1.6;
       camera.position.set(0, 0, (visibleH / 2) / Math.tan(T.MathUtils.degToRad(camera.fov / 2)));
       camera.updateProjectionMatrix();
     }
@@ -79,8 +72,7 @@
     if ("ResizeObserver" in window) new ResizeObserver(resize).observe(canvas);
     else window.addEventListener("resize", resize);
 
-    // pointer → target tilt, measured from the mark's own centre
-    var tx = 0, ty = 0, rx = 0.35, ry = -0.9;
+    var tx = 0, ty = 0, rx = 0.2, ry = -0.6;
     window.addEventListener("pointermove", function (e) {
       var r = box.getBoundingClientRect();
       var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -94,20 +86,24 @@
       running = visible && !document.hidden;
       if (!running) return;
       var t = (now - t0) / 1000;
-      var intro = Math.min(1, t / 1.6);
-      var introEase = 1 - Math.pow(1 - intro, 3);
-      var p = parseFloat(box.dataset.progress || "0");          // set by site.js from scroll
-      var settle = 1 - p;                                          // 1 at top, 0 when flat
-      var e = settle * (1 + (1 - introEase) * 0.8);                // explode amount
+      var intro = Math.min(1, t / 1.8);
+      var ie = 1 - Math.pow(1 - intro, 3);                       // ease-out
+      var p = parseFloat(box.dataset.progress || "0");           // set by site.js from scroll
+      var settle = 1 - p;                                         // 1 at top, 0 when closed
+      var fly = 1 - ie;                                           // 1 at load, 0 once the intro ends
+      var sep = 4 * settle + 46 * fly;                            // sideways gap between the halves
+      var depth = settle + 1.6 * fly;                             // how far they float apart in depth
+      var roll = 0.4 * settle + 1.2 * fly;
 
-      upper.position.y = 7 * e;
-      lower.position.y = -3 * e;
-      bowl.position.z = 16 + 30 * e;
-      slash.position.z = 24 + 52 * e;
+      var bh = blue.userData.home, gh = green.userData.home;
+      blue.position.set(bh.x - sep, bh.y + 1.5 * depth, -12 * depth);
+      green.position.set(gh.x + sep, gh.y - 1.5 * depth, 9 + 26 * depth);
+      blue.rotation.set(0.05 * roll, -0.12 * roll, 0.08 * roll);
+      green.rotation.set(-0.05 * roll, 0.12 * roll, -0.08 * roll);
 
-      var sway = Math.sin(t * 0.6) * 0.07;
-      var targetY = (tx * 0.42 + sway - 0.26) * settle;
-      var targetX = (ty * 0.26 + 0.1) * settle;
+      var sway = Math.sin(t * 0.6) * 0.06;
+      var targetY = (tx * 0.42 + sway - 0.22) * settle;
+      var targetX = (ty * 0.26 + 0.08) * settle;
       var k = intro < 1 ? 0.04 : 0.07;
       ry += (targetY - ry) * k;
       rx += (targetX - rx) * k;
@@ -122,7 +118,7 @@
       new IntersectionObserver(function (en) { visible = en[0].isIntersecting; wake(); }).observe(box);
     }
     document.addEventListener("visibilitychange", wake);
-    reduce.addEventListener && reduce.addEventListener("change", function () {
+    if (reduce.addEventListener) reduce.addEventListener("change", function () {
       if (reduce.matches) { visible = false; box.classList.remove("is-3d"); }
     });
     requestAnimationFrame(frame);

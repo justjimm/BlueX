@@ -24,7 +24,7 @@ except ImportError:  # articles need it; pages do not
 SRC = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SRC)
 CFG = json.load(open(os.path.join(SRC, "config.json")))
-GEO = json.load(open(os.path.join(SRC, "b-geometry.json")))
+GEO = json.load(open(os.path.join(SRC, "x-geometry.json")))
 BRAND = os.path.join(ROOT, "assets", "brand")
 TODAY = dt.date.today()
 
@@ -79,26 +79,27 @@ def svg_inner(fname):
     return s
 
 
-def themable_lockup():
-    """Header/footer logo: one inline SVG coloured from CSS."""
-    s = svg_inner("bluechip-lockup.svg")
-    s = s.replace('fill="#101D3A"', 'class="l-ink"').replace('fill="#2357FF"', 'class="l-bowl"') \
-         .replace('fill="#5B8CFF"', 'class="l-slash"')
+def header_logo():
+    """Header logo: the BlueX small-size version, coloured from CSS."""
+    s = svg_inner("bluex-wordmark.svg")
     s = s.replace('role="img"', 'aria-hidden="true" focusable="false"')
-    s = re.sub(r'width="\d+" height="\d+" ', "", s, count=1)
-    return s
+    return re.sub(r'width="[\d.]+" height="[\d.]+" ', "", s, count=1)
 
 
-def b_layers_svg():
-    """The B as three stacked SVG layers (static and CSS-3D fallback for the hero)."""
-    vb = f'viewBox="-4 -4 {GEO["box"][0] + 8} {GEO["box"][1] + 8}"'
-    navy = rings_d(GEO["upper"] + GEO["lower"])
-    bowl = rings_d(GEO["bowl"])
-    slash = rings_d(GEO["slash"])
-    layer = lambda cls, d, fill: (f'<svg class="mark-layer {cls}" {vb} aria-hidden="true" focusable="false">'
-                                  f'<path fill="{fill}" d="{d}"/></svg>')
-    return (layer("mark-navy", navy, "#101D3A") + layer("mark-bowl", bowl, "#2357FF") +
-            layer("mark-slash", slash, "#5B8CFF"))
+def footer_logo():
+    """Footer logo: BlueX primary, reversed."""
+    s = svg_inner("bluex-primary-reversed.svg")
+    s = s.replace('role="img"', 'aria-hidden="true" focusable="false"')
+    return re.sub(r'width="[\d.]+" height="[\d.]+" ', "", s, count=1)
+
+
+def x_layers_svg():
+    """The BlueX X as two stacked SVG layers (static and CSS-3D fallback for the hero)."""
+    vb = 'viewBox="-6 -6 134 107"'
+    d = lambda pts: "M" + " L".join(f"{x} {y}" for x, y in pts) + "Z"
+    layer = lambda cls, pts, fill: (f'<svg class="mark-layer {cls}" {vb} aria-hidden="true" focusable="false">'
+                                    f'<path fill="{fill}" d="{d(pts)}"/></svg>')
+    return layer("mark-blue", GEO["blue"], GEO["colors"]["blue"]) + layer("mark-green", GEO["green"], GEO["colors"]["green"])
 
 
 X_SVG = ('<svg class="x-device" viewBox="0 0 122 95" aria-hidden="true" focusable="false">'
@@ -132,7 +133,7 @@ def load_articles():
         date = dt.date.fromisoformat(meta["date"])
         slug = meta.get("slug") or re.sub(r"[^a-z0-9]+", "-", os.path.splitext(fn)[0].lower()).strip("-")
         body = markdown.markdown(m.group(2), extensions=["extra", "smarty", "sane_lists"])
-        out.append({"title": meta["title"], "date": date, "author": meta.get("author", "Bluechip"),
+        out.append({"title": meta["title"], "date": date, "author": meta.get("author", "Bluechip Experience Limited"),
                     "summary": meta["summary"], "slug": slug, "body": body})
     out.sort(key=lambda a: a["date"], reverse=True)
     return out
@@ -149,10 +150,10 @@ def human_date(d):
 # ------------------------------------------------------------------ chrome
 def head(title, desc, root, path, extra_head="", noindex=False):
     url = CFG["site_url"].rstrip("/") + "/" + ("" if path == "index.html" else path)
-    full_title = title if title.startswith("Bluechip") else f"{title} | Bluechip Experience Limited"
+    full_title = title if title.startswith("Bluechip Experience Limited") else f"{title} | Bluechip Experience Limited"
     org = {
         "@context": "https://schema.org", "@type": "Organization",
-        "name": CFG["legal_name"], "alternateName": ["Bluechip", "BlueX"], "url": CFG["site_url"],
+        "name": CFG["legal_name"], "alternateName": ["BlueX"], "url": CFG["site_url"],
         "logo": CFG["site_url"] + "/assets/brand/icon-512.png", "email": CFG["email"],
         "telephone": CFG["phone_href"], "foundingDate": CFG["incorporated_iso"],
         "identifier": {"@type": "PropertyValue", "propertyID": "CAC RC number", "value": CFG["rc"]},
@@ -182,7 +183,7 @@ def head(title, desc, root, path, extra_head="", noindex=False):
 <link rel="icon" href="{root}favicon.svg" type="image/svg+xml">
 <link rel="icon" href="{root}favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="{root}apple-touch-icon.png">
-<link rel="alternate" type="application/rss+xml" title="Bluechip Insights" href="{root}feed.xml">
+<link rel="alternate" type="application/rss+xml" title="Bluechip Experience Limited Insights" href="{root}feed.xml">
 <link rel="preload" href="{root}assets/fonts/inter-latin-opsz.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{root}assets/css/site.css">
 <script type="application/ld+json">{json.dumps(org, separators=(",", ":"))}</script>
@@ -202,7 +203,7 @@ def header(active, root):
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="{root}index.html" aria-label="Bluechip, home">{themable_lockup()}</a>
+    <a class="brand" href="{root}index.html" aria-label="Bluechip Experience Limited, home">{header_logo()}</a>
     <nav class="site-nav" aria-label="Main">
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">Menu</button>
       <ul id="nav-list" class="nav-list">
@@ -229,7 +230,7 @@ def footer(root):
 <footer class="site-footer">
   <div class="wrap">
     <div class="foot-top">
-      <a class="brand brand-rev" href="{root}index.html" aria-label="Bluechip, home">{themable_lockup()}</a>
+      <a class="brand brand-rev" href="{root}index.html" aria-label="Bluechip Experience Limited, home">{footer_logo()}</a>
       <p class="foot-line">We build businesses. We invest in opportunity. We operate for the long term.</p>
     </div>
     <div class="foot-grid">
@@ -341,14 +342,13 @@ def tokens(text, root):
         "%%INCORP%%": CFG["incorporated"],
         "%%LEGAL%%": CFG["legal_name"],
         "%%FORMSPREE%%": esc(CFG.get("formspree_id", "")),
-        "%%B_LAYERS%%": b_layers_svg(),
+        "%%X_LAYERS%%": x_layers_svg(),
         "%%X_DEVICE%%": X_SVG,
         "%%BIZ_ROWS%%": biz_rows(root),
         "%%BIZ_SECTIONS%%": biz_sections(root),
         "%%ARTICLES%%": article_list(root),
         "%%NEWSLETTER%%": newsletter_block(),
         "%%BLUEX_LOCKUP%%": svg_inner("bluex-primary-reversed.svg").replace('role="img"', 'role="img" aria-label="BlueX. Opportunity, structured."'),
-        "%%ES_LOCKUP%%": svg_inner("bluechip-enterprise-services.svg").replace('role="img"', 'role="img" aria-label="Bluechip Enterprise Services"'),
         "%%UPDATED%%": human_date(TODAY),
     }
     for k, v in rep.items():
@@ -407,7 +407,7 @@ def build_articles():
 def build_redirects():
     for old, new in REDIRECTS.items():
         write(old, f"""<!doctype html>
-<html lang="en-NG"><head><meta charset="utf-8"><title>Moved | Bluechip</title>
+<html lang="en-NG"><head><meta charset="utf-8"><title>Moved | Bluechip Experience Limited</title>
 <meta name="robots" content="noindex"><link rel="canonical" href="{CFG['site_url']}/{new.split('#')[0]}">
 <meta http-equiv="refresh" content="0; url={new}"></head>
 <body><p>This page has moved to <a href="{new}">{new}</a>.</p></body></html>
@@ -427,7 +427,7 @@ def build_feed():
     write("feed.xml", f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>Bluechip Insights</title>
+  <title>Bluechip Experience Limited Insights</title>
   <link>{base}/insights.html</link>
   <description>Notes on building and running businesses in Nigeria, from Bluechip Experience Limited.</description>
   <language>en-ng</language>{items}
@@ -451,7 +451,7 @@ def build_seo(pages):
 
 def build_hero3d():
     src = read(os.path.join(SRC, "hero3d.src.js"))
-    geo = {k: GEO[k] for k in ("box", "upper", "lower", "bowl", "slash", "colors")}
+    geo = GEO
     write("assets/js/hero3d.js", src.replace("%%GEO%%", json.dumps(geo, separators=(",", ":"))))
 
 

@@ -38,7 +38,7 @@ newsletter service can watch to email new articles automatically.
 
 ## What's included
 
-- `assets/brand/`: the corrected logo files used on the site (text outlined, nothing clipped).
+- `assets/brand/`: the BlueX logos used on the site (primary in colour, black and reversed; the X symbol; a small header version without the tagline). Text is outlined so it never falls back to another font.
 - `assets/fonts/`: Inter, self-hosted (SIL Open Font Licence, `OFL.txt`).
-- `assets/vendor/`: Three.js r128 for the 3D hero (MIT licence). It loads only on desktop.
+- `assets/vendor/`: Three.js r128 for the 3D X in the hero (MIT licence). It loads only on desktop.
 - Old addresses (`products.html`, `gaugeloads.html`, `ekobuja.html` and others) redirect to the new pages.

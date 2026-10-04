@@ -1,7 +1,7 @@
-/* Bluechip — bcexl.com
+/* Bluechip Experience Limited / BlueX — bcexl.com
    Layout: institutional editorial. A 12-column grid with wide margins, statements set large and
    left-aligned, rows and rules instead of card stacks. Navy bands mark BlueX and the footer; green
-   appears only in the BlueX X. One signature moment: the B monogram in 3D in the hero. */
+   appears only in the BlueX X. One signature moment: the BlueX X in 3D in the hero. */
 
 @font-face {
   font-family: "Inter";
@@ -131,11 +131,10 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 .site-header.is-scrolled { border-bottom-color: var(--rule); }
 .header-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: var(--header-h); }
 .brand { display: inline-flex; flex: none; text-decoration: none; }
-.brand svg { height: 32px; width: auto; }
+.brand svg { height: 30px; width: auto; }
 .l-ink { fill: var(--navy); }
-.l-bowl { fill: var(--cobalt); }
-.l-slash { fill: var(--cobalt-light); }
-.brand-rev .l-ink { fill: #fff; }
+.l-x1 { fill: var(--cobalt); }
+.l-x2 { fill: var(--green); }
 
 .nav-list { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 32px); list-style: none; margin: 0; padding: 0; }
 .nav-list a {
@@ -182,21 +181,20 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 .hero-mark {
   --explode: 1;
   position: relative; justify-self: center;
-  height: clamp(280px, 36vw, 500px); aspect-ratio: 128 / 178; max-width: 100%;
+  width: clamp(260px, 31vw, 450px); aspect-ratio: 134 / 107; max-width: 100%;
 }
-.mark-stack { position: absolute; inset: 0; perspective: 1100px; transition: opacity .6s ease; }
+.mark-stack { position: absolute; inset: 0; perspective: 1100px; transition: opacity .6s ease; transform-style: preserve-3d; }
 .mark-layer {
-  position: absolute; inset: 0; width: 100%; height: 100%;
+  position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
   transform-origin: 50% 50%;
   transition: transform .9s cubic-bezier(.2,.7,.2,1);
+  transform: rotateY(calc(var(--explode) * -14deg)) rotateX(calc(var(--explode) * 6deg))
+             translateX(calc(var(--dx) * var(--explode))) translateZ(calc(var(--z) * var(--explode)));
 }
-.mark-stack { transform-style: preserve-3d; }
-.mark-layer { transform: rotateY(calc(var(--explode) * -16deg)) rotateX(calc(var(--explode) * 7deg)) translateZ(calc(var(--z) * var(--explode))); }
-.mark-navy { --z: 0px; }
-.mark-bowl { --z: 46px; }
-.mark-slash { --z: 84px; }
+.mark-blue { --dx: -3%; --z: 0px; }
+.mark-green { --dx: 3%; --z: 60px; }
 .mark-canvas {
-  position: absolute; inset: -18% -30%; width: 160%; height: 136%; max-width: none;
+  position: absolute; inset: -30% -30%; width: 160%; height: 160%; max-width: none;
   opacity: 0; transition: opacity .8s ease; pointer-events: none;
 }
 .hero-mark.is-3d .mark-stack { opacity: 0; }
@@ -254,6 +252,8 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 .band-navy p { color: var(--on-navy-2); }
 .band-navy .lead { color: var(--on-navy); }
 .bluex-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.bluex-split { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 112px); align-items: center; }
+.bluex-split .bluex-lockup svg { width: clamp(260px, 38vw, 500px); }
 .bluex-copy { min-width: 0; }
 .bluex-copy > * + * { margin-top: 20px; }
 .bluex-copy .actions { margin-top: 32px; }
@@ -316,7 +316,6 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 .page-head { padding-block: clamp(48px, 7vw, 112px) clamp(40px, 5vw, 72px); }
 .page-head h1 { font-size: var(--t-h1); line-height: 1.04; letter-spacing: -.034em; }
 .page-head .lead { margin-top: 20px; max-width: 46ch; }
-.es-lockup svg { width: clamp(260px, 36vw, 440px); height: auto; margin-bottom: clamp(20px, 3vw, 36px); }
 .page-404 .actions { margin-top: 32px; }
 
 /* business detail */
@@ -395,7 +394,7 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 
 /* ------------------------------------------------------------ footer */
 .site-footer { background: var(--navy); color: var(--on-navy); padding-block: clamp(56px, 7vw, 96px) 32px; }
-.site-footer .brand svg { height: 34px; }
+.site-footer .brand svg { height: 64px; }
 .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px 40px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.14); }
 .foot-line { color: var(--on-navy-2); font-size: 1rem; max-width: 52ch; }
 .foot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 32px; padding-block: 40px; }
@@ -410,10 +409,10 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
 /* ------------------------------------------------------------ responsive */
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: minmax(0, 1fr); }
-  .hero-mark { justify-self: end; height: clamp(200px, 50vw, 300px); margin-top: 8px; margin-right: 6%; }
-  .mark-bowl { --z: 22px; }
-  .mark-slash { --z: 40px; }
-  .split, .section-head, .bluex-grid, .cta-grid, .contact-grid, .biz-detail { grid-template-columns: minmax(0, 1fr); }
+  .hero-mark { justify-self: end; width: clamp(200px, 58vw, 380px); margin-top: 12px; margin-right: 8%; }
+  .mark-blue { --dx: -3%; }
+  .mark-green { --dx: 3%; --z: 30px; }
+  .split, .section-head, .bluex-grid, .bluex-split, .cta-grid, .contact-grid, .biz-detail { grid-template-columns: minmax(0, 1fr); }
   .section-head { align-items: start; gap: 12px; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .principles { grid-template-columns: minmax(0, 1fr); }
@@ -427,12 +426,12 @@ h3 { font-size: var(--t-h3); line-height: 1.25; letter-spacing: -.012em; font-we
   .defs > div, .details > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .post { grid-template-columns: minmax(0, 1fr); }
   .post-date { grid-row: auto; }
-  .brand svg { height: 28px; }
+  .brand svg { height: 26px; }
 }
 @media (max-width: 480px) {
   .steps { grid-template-columns: minmax(0, 1fr); }
   .facts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 16px; }
-  .hero-mark { height: 190px; }
+  .hero-mark { width: 62vw; }
 }
 
 @media (prefers-reduced-motion: reduce) {
