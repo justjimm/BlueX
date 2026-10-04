@@ -1,0 +1,58 @@
+<!--
+title: Contact
+description: Contact Bluechip Experience Limited: infodesk@bcexl.com, +234 701 122 0009, 5 Curtis Adeniyi-Jones Street, off Gbajumo Crescent, Surulere, Lagos.
+nav: contact
+-->
+<section class="page-head">
+  <div class="wrap">
+    <h1>Contact</h1>
+    <p class="lead">Tell us about the opportunity, the transaction or the service you need. We reply by email.</p>
+  </div>
+</section>
+
+<section class="section section-tight-top">
+  <div class="wrap contact-grid">
+    <form id="contact-form" class="form" data-formspree="%%FORMSPREE%%" data-email="%%EMAIL%%" novalidate>
+      <div class="field">
+        <label for="cf-name">Your name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+        <p class="field-error" id="cf-name-err" hidden>Enter your name.</p>
+      </div>
+      <div class="field">
+        <label for="cf-email">Email address</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+        <p class="field-error" id="cf-email-err" hidden>Enter an email address we can reply to, like name@company.com.</p>
+      </div>
+      <div class="field">
+        <label for="cf-company">Company <span class="opt">(optional)</span></label>
+        <input id="cf-company" name="company" type="text" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="cf-topic">What is it about?</label>
+        <select id="cf-topic" name="topic">
+          <option>An opportunity for BlueX</option>
+          <option>Enterprise Services</option>
+          <option>Structured finance</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="6" required></textarea>
+        <p class="field-error" id="cf-message-err" hidden>Write a short message so we know how to help.</p>
+      </div>
+      <p class="fine">We use these details only to reply to you. See our <a href="%%ROOT%%privacy.html">privacy notice</a>.</p>
+      <button class="btn" type="submit">Send message</button>
+      <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <aside class="contact-aside" aria-labelledby="cd-h">
+      <h2 id="cd-h">Contact details</h2>
+      <dl class="details details-stack">
+        <div><dt>Email</dt><dd><a href="mailto:%%EMAIL%%">%%EMAIL%%</a> <button class="copy" type="button" data-copy="%%EMAIL%%">Copy</button></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:%%PHONE_HREF%%">%%PHONE%%</a> <button class="copy" type="button" data-copy="%%PHONE_HREF%%">Copy</button></dd></div>
+        <div><dt>Office</dt><dd><address>%%ADDRESS%%</address><a class="link" href="%%MAPS%%" target="_blank" rel="noopener">Open in Google Maps</a></dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>

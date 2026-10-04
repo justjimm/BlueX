@@ -1,0 +1,105 @@
+{
+  "site_url": "https://www.bcexl.com",
+  "legal_name": "Bluechip Experience Limited",
+  "brand": "Bluechip",
+  "rc": "1938873",
+  "incorporated": "6 June 2022",
+  "incorporated_iso": "2022-06-06",
+  "email": "infodesk@bcexl.com",
+  "phone_display": "+234 701 122 0009",
+  "phone_href": "+2347011220009",
+  "address_lines": [
+    "5 Curtis Adeniyi-Jones Street",
+    "off Gbajumo Crescent",
+    "Surulere, Lagos"
+  ],
+  "maps_url": "https://www.google.com/maps/search/?api=1&query=5+Curtis+Adeniyi-Jones+Street+Surulere+Lagos",
+  "_formspree_note": "Paste the Formspree form ID (the part after /f/) to send the contact form straight to the inbox. Empty = the form opens the visitor's email app instead.",
+  "formspree_id": "",
+  "_newsletter_note": "Form action URL from the newsletter provider (e.g. Buttondown or Brevo embed). Empty = signup hidden.",
+  "newsletter_action": "",
+  "newsletter_email_field": "email",
+  "_insights_note": "Insights appears in the menu once this many articles are published.",
+  "insights_min_articles": 3,
+  "_socials_note": "Add full profile URLs when the accounts exist. Empty ones are not shown.",
+  "socials": {
+    "LinkedIn": "",
+    "X": "",
+    "Instagram": "",
+    "YouTube": ""
+  },
+  "_status_note": "live = shows a link to url; held = no link yet; dev = 'In development' label, no link; inhouse = a BlueX business line",
+  "businesses": [
+    {
+      "id": "ekobuja",
+      "name": "EkoBuja",
+      "sector": "Real estate",
+      "status": "live",
+      "url": "https://www.ekobuja.com",
+      "summary": "Co-ownership of income-producing property, in shares that co-owners can trade with each other.",
+      "detail": [
+        "EkoBuja lets people co-own income-producing property. Each property is divided into shares. Co-owners receive their part of the rent, and can sell their shares to other co-owners.",
+        "EkoBuja is operated as a separate company."
+      ],
+      "cta": null
+    },
+    {
+      "id": "prenniex",
+      "name": "Prenniex",
+      "sector": "Solar and power engineering",
+      "status": "live",
+      "url": "https://prenniex.com",
+      "summary": "Solar hybrid systems, battery storage and electrical installation for homes, businesses and institutions across Nigeria.",
+      "detail": [
+        "Prenniex Global Solutions designs, supplies, installs and maintains solar hybrid power systems, battery storage and electrical installations for homes, businesses and institutions across Nigeria.",
+        "It is operated as a separate company, with its own engineers and installation crews."
+      ],
+      "cta": null
+    },
+    {
+      "id": "gaugeloans",
+      "name": "GaugeLoans",
+      "sector": "Credit",
+      "status": "dev",
+      "url": "",
+      "summary": "A credit business for people and small businesses, now in development. It is not open for applications.",
+      "detail": [
+        "GaugeLoans is a credit business we are building for people and small businesses in Nigeria.",
+        "It is in development. It does not offer loans or take applications, and will not until the required approvals are in place."
+      ],
+      "cta": null
+    },
+    {
+      "id": "structured-finance",
+      "name": "Structured Finance",
+      "sector": "Vendor and trade finance",
+      "status": "inhouse",
+      "url": "",
+      "summary": "Working capital for suppliers, distributors and service providers, built around a real contract and repaid through its payment cycle.",
+      "detail": [
+        "BlueX Structured Finance provides working capital to suppliers, distributors and service providers who have real contracts to deliver.",
+        "Each arrangement is tied to a specific contract or trade cycle, documented in full, and repaid from the payments that contract produces."
+      ],
+      "cta": {
+        "label": "Discuss a transaction",
+        "href": "contact.html"
+      }
+    },
+    {
+      "id": "ventures",
+      "name": "BlueX Ventures",
+      "sector": "Venture building",
+      "status": "inhouse",
+      "url": "",
+      "summary": "New businesses we start, partnerships with operators, and selective investments in companies we can help run.",
+      "detail": [
+        "BlueX Ventures starts new businesses, partners with operators who need structure and capital, and makes selective investments in companies where we can help run things.",
+        "We look for real demand, a clear way to make money, and a part of the business where we can make a difference."
+      ],
+      "cta": {
+        "label": "Bring us an opportunity",
+        "href": "contact.html"
+      }
+    }
+  ]
+}
