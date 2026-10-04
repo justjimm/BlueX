@@ -15,7 +15,7 @@
   ],
   "maps_url": "https://www.google.com/maps/search/?api=1&query=5+Curtis+Adeniyi-Jones+Street+Surulere+Lagos",
   "_formspree_note": "Paste the Formspree form ID (the part after /f/) to send the contact form straight to the inbox. Empty = the form opens the visitor's email app instead.",
-  "formspree_id": "",
+  "formspree_id": "xvkzpneb",
   "_newsletter_note": "Form action URL from the newsletter provider (e.g. Buttondown or Brevo embed). Empty = signup hidden.",
   "newsletter_action": "",
   "newsletter_email_field": "email",

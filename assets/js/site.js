@@ -132,6 +132,7 @@
       if (firstBad) { fields[firstBad].focus(); return; }
 
       var data = new FormData(form);
+      data.append("_subject", "bcexl.com enquiry: " + data.get("topic"));
       var id = (form.getAttribute("data-formspree") || "").trim();
       var btn = form.querySelector('button[type="submit"]');
       if (id) {

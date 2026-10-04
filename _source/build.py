@@ -133,7 +133,9 @@ def load_articles():
         date = dt.date.fromisoformat(meta["date"])
         slug = meta.get("slug") or re.sub(r"[^a-z0-9]+", "-", os.path.splitext(fn)[0].lower()).strip("-")
         body = markdown.markdown(m.group(2), extensions=["extra", "smarty", "sane_lists"])
+        words = len(re.sub(r"<[^>]+>", " ", body).split())
         out.append({"title": meta["title"], "date": date, "author": meta.get("author", "Bluechip Experience Limited"),
+                    "series": meta.get("series", "Insights"), "minutes": max(1, round(words / 230)),
                     "summary": meta["summary"], "slug": slug, "body": body})
     out.sort(key=lambda a: a["date"], reverse=True)
     return out
@@ -305,9 +307,10 @@ def article_list(root):
     items = []
     for a in ARTICLES:
         items.append(f"""<li class="post">
-  <p class="post-date"><time datetime="{a['date'].isoformat()}">{human_date(a['date'])}</time></p>
+  <p class="post-date"><time datetime="{a['date'].isoformat()}">{human_date(a['date'])}</time><br>{a['minutes']} min read</p>
   <h2 class="post-title"><a href="{root}insights/{a['slug']}.html">{esc(a['title'])}</a></h2>
   <p class="post-sum">{esc(a['summary'])}</p>
+  <p class="post-by">By {esc(a['author'])}</p>
 </li>""")
     return '<ol class="post-list" role="list">' + "".join(items) + "</ol>"
 
@@ -392,10 +395,10 @@ def build_articles():
         path = f"insights/{a['slug']}.html"
         body = f"""<article class="article">
   <header class="wrap article-head">
-    <p class="article-meta"><a href="{root}insights.html">Insights</a></p>
+    <p class="article-meta"><a href="{root}insights.html">{esc(a['series'])}</a></p>
     <h1>{esc(a['title'])}</h1>
     <p class="lead">{esc(a['summary'])}</p>
-    <p class="article-by">By {esc(a['author'])}, <time datetime="{a['date'].isoformat()}">{human_date(a['date'])}</time></p>
+    <p class="article-by">By {esc(a['author'])}. <time datetime="{a['date'].isoformat()}">{human_date(a['date'])}</time>. {a['minutes']} min read</p>
   </header>
   <div class="wrap"><div class="prose article-body">{a['body']}</div></div>
 </article>
